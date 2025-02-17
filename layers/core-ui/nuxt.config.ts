@@ -19,9 +19,9 @@ export default defineNuxtConfig({
    primevue: {
       options: {
          theme: {
-            preset: resolveTheme(import.meta.env.APP_PRIMARY_COLOR || 'blue', import.meta.env.APP_SECONDARY_COLOR, import.meta.env.APP_TERTIARY_COLOR),
+            preset: resolveTheme(import.meta.env.APP_PRIMARY_COLOR),
             options: {
-               cssLayers: false,
+               cssLayer: false,
                order: "tailwind-base, primevue, tailwind-utilities",
                darkModeSelector: 'light'
             }

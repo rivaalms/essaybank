@@ -1,12 +1,24 @@
 import { definePreset, palette } from "@primevue/themes"
 import Aura from "@primevue/themes/aura"
 
-export function resolveTheme(baseColor: `#${string}`, secondary?: `#${string}`, tertiary?: `#${string}`) {
+export function resolveTheme(baseColor: `#${string}`) {
    return definePreset(Aura, {
       semantic: {
          primary: palette(baseColor ?? '{emerald}'),
-         secondary: palette(secondary ?? '{amber}'),
-         tertiary: palette(tertiary ?? '{indigo}')
+         colorScheme: {
+            light: {
+               surface: palette('{gray}')
+            }
+         }
+      },
+      components: {
+         button: {
+            extend: {
+               accent: {
+                  color: 'var(--secondary-color-300)'
+               }
+            }
+         }
       }
    })
 }

@@ -15,7 +15,7 @@ export default {
          '6xl': '4.77rem',
          '7xl': '5.96rem',
       },
-     extend: {},
+      extend: {},
    },
    plugins: [require("tailwindcss-primeui")],
 }
