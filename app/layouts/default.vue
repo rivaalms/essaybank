@@ -10,7 +10,7 @@ const { y } = useScroll(window)
 </script>
 
 <template>
-   <div class="min-h-[calc(200vh-49px)] relative">
+   <div class="min-h-[calc(100vh-49px)] relative">
       <header class="absolute top-0 inset-x-0 z-30">
          <div class="py-4 container px-2 md:px-0 mx-auto">
             <div class="flex items-center justify-between">
