@@ -26,6 +26,8 @@ function scrollToProfile() {
                      label="Mulai Sekarang"
                      size="large"
                      fluid
+                     as="router-link"
+                     to="/essays"
                   />
                </div>
                <div class="flex-1 md:flex-none md:col-start-7 md:col-span-3">

@@ -1,0 +1,81 @@
+<script setup lang="ts">
+definePageMeta({
+   layout: 'default'
+})
+const essayStore = useEssayStore()
+const recentAnsweredEssay = computed(() => essayStore.getAnswers.find((answer, index) => index == essayStore.answers.length - 1))
+</script>
+
+<template>
+   <div class="relative h-[calc(100vh-49px)] p-2 xl:p-0 flex items-center justify-center bg-[url('/img/mesh-gradient.png')] bg-cover bg-no-repeat">
+      <Card class="max-w-screen-md">
+         <template #title>
+            <span class="text-xl">Sebelum Mulai, Baca Ini Dulu!</span>
+         </template>
+         <template #content>
+            <div class="flex flex-col gap-4">
+               <p class="text-pretty">
+                  Sebelum kamu mulai mengisi esai, ada beberapa hal penting yang
+                  perlu kamu tahu:
+               </p>
+               <ul class="list-disc ms-4">
+                  <li class="text-pretty">
+                     <span class="font-medium text-primary-500">
+                        Ada 50 pertanyaan esai
+                     </span>
+                     yang bisa kamu isi. Kamu akan diminta untuk menjawab
+                     minimal 10 pertanyaan. Kamu nggak harus menjawab semuanya,
+                     tapi semakin banyak yang kamu isi, semakin bermanfaat untuk
+                     penelitian ini!
+                  </li>
+                  <li class="text-pretty">
+                     <span class="font-medium text-primary-500">
+                        Nggak ada jawaban yang salah!
+                     </span>
+                     Jawablah dengan gaya dan pemikiranmu sendiri. Santai aja,
+                     nggak perlu khawatir soal benar dan salah. 😉
+                  </li>
+                  <li class="text-pretty">
+                     <span class="font-medium text-primary-500">
+                        Progres kamu aman!
+                     </span>
+                     Begitu kamu mulai, alamat IP kamu akan disimpan di browser
+                     supaya progres tetap tersimpan. Jadi, kalau tab tertutup
+                     atau kamu mau lanjut nanti, jawabannya nggak bakal hilang.
+                  </li>
+                  <li class="text-pretty">
+                     <span class="font-medium text-primary-500">
+                        Kalau ada pertanyaan atau kendala, jangan ragu untuk
+                        menghubungi kami!
+                     </span>
+                  </li>
+               </ul>
+
+               <p class="text-pretty">Siap? Yuk mulai esainya! 🚀✍️</p>
+            </div>
+         </template>
+         <template #footer>
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 mt-8">
+               <Button
+                  label="Mulai Sekarang"
+                  icon="pi pi-arrow-right"
+                  icon-pos="right"
+                  size="large"
+                  as="router-link"
+                  :to="`/essays/${recentAnsweredEssay?.question_id ?? 1}`"
+                  class="order-first md:order-last"
+               />
+               <Button
+                  label="Kembali ke Halaman Utama"
+                  variant="text"
+                  severity="secondary"
+                  icon="pi pi-arrow-left"
+                  class="order-last md:order-first"
+                  as="router-link"
+                  to="/"
+               />
+            </div>
+         </template>
+      </Card>
+   </div>
+</template>
