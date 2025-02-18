@@ -19,7 +19,7 @@ export const useEssayStore = defineStore("essaybank-essay-store", {
    getters: {
       getIp: (state) => (!!state.ip && atob(state.ip)) || null,
       getAnswers: (state) => state.answers,
-      getAnswer: (state) => (questionId: number) => state.answers.find(a => a.question_id == questionId)
+      getAnswer: (state) => (questionId: number) => state.answers.find(a => a.question_id == questionId),
    },
 
    actions: {
