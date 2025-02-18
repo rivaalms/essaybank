@@ -12,18 +12,35 @@ const { data } = await useLazyAsyncData(
 )
 
 const count = await useCountQuestion()
-const countWatcher = watch(count, async (value) => {
-   if (value > 0) {
-      setTimeout(() => {
-         const current = document.getElementById(`question-indicator-${id.value}`)
-         current?.scrollIntoView()
-         countWatcher()
-      }, 100)
-   }
-}, { immediate: true })
+const countWatcher = watch(
+   count,
+   async (value) => {
+      if (value > 0) {
+         setTimeout(() => {
+            const currentActive = document.getElementById(
+               `question-indicator-${id.value}`
+            )
+            const { left: btnLeft, width: btnWidth } =
+               useElementBounding(currentActive)
+            const { left: containerLeft, width: containerWidth } =
+               useElementBounding(questionIndicatorContainerRef)
+
+            const offset =
+               btnLeft.value -
+               containerLeft.value -
+               (containerWidth.value - btnWidth.value) / 2
+            x.value = questionIndicatorContainerRef.value.scrollLeft + offset
+            countWatcher()
+         }, 100)
+      }
+   },
+   { immediate: true }
+)
 
 const essayStore = useEssayStore()
-const answeredQuestionId = computed(() => essayStore.getAnswers.map((answer) => answer.question_id))
+const answeredQuestionId = computed(() =>
+   essayStore.getAnswers.map((answer) => answer.question_id)
+)
 
 const answer = shallowRef("")
 
@@ -42,6 +59,8 @@ async function navigateToQuestion(questionId: number) {
 function saveAnswerToState() {
    if (answer.value.length > 0) {
       essayStore.updateAnswer(id.value, answer.value)
+   } else {
+      essayStore.removeAnswer(id.value)
    }
 }
 
@@ -64,8 +83,12 @@ onMounted(() => {
       answer.value = existingAnswer.answer
    }
    setTimeout(() => {
-      document.getElementById('answer-input')?.focus()
+      document.getElementById("answer-input")?.focus()
    }, 50)
+})
+
+addEventListener("beforeunload", () => {
+   saveAnswerToState()
 })
 </script>
 
@@ -73,7 +96,9 @@ onMounted(() => {
    <div
       class="lg:h-[calc(100vh-49px)] lg:flex lg:justify-center lg:items-center bg-surface-50 relative"
    >
-      <div class="absolute top-0 inset-x-0 h-1/2 w-full bg-[url('/img/mesh-gradient.png')] bg-cover bg-no-repeat"></div>
+      <div
+         class="absolute top-0 inset-x-0 h-1/2 w-full bg-[url('/img/mesh-gradient.png')] bg-cover bg-no-repeat"
+      ></div>
       <div class="container mx-auto max-w-screen-md z-20">
          <div class="flex flex-col gap-4">
             <Card>
@@ -91,15 +116,22 @@ onMounted(() => {
                         class="!shrink-0"
                         @click="scrollProgressTo(x - 439)"
                      />
-                     <div id="question-indicator-container" ref="questionIndicatorContainerRef" class="flex gap-4 overflow-x-auto py-2">
+                     <div
+                        id="question-indicator-container"
+                        ref="questionIndicatorContainerRef"
+                        class="flex gap-4 overflow-x-auto py-2"
+                     >
                         <template v-for="n in count">
                            <div
                               :id="`question-indicator-${n}`"
                               class="px-4 py-2 rounded-lg select-none cursor-pointer"
                               :class="{
-                                 'bg-primary-100 text-primary-600 border border-primary-600': n === id,
-                                 'bg-surface-100 text-surface-500': n !== id && !answeredQuestionId.includes(n),
-                                 'bg-emerald-100 text-emerald-500 border border-emerald-500': n !== id && answeredQuestionId.includes(n)
+                                 'bg-primary-100 text-primary-600 border border-primary-600':
+                                    n === id,
+                                 'bg-surface-100 text-surface-500':
+                                    n !== id && !answeredQuestionId.includes(n),
+                                 'bg-emerald-100 text-emerald-500 border border-emerald-500':
+                                    n !== id && answeredQuestionId.includes(n),
                               }"
                               @click.stop="navigateToQuestion(n)"
                            >
@@ -137,7 +169,12 @@ onMounted(() => {
                            auto-resize
                            autofocus
                         />
-                        <div class="flex items-center" :class="[ id - 1 > 0 ? 'justify-between' : 'justify-end']">
+                        <div
+                           class="flex items-center"
+                           :class="[
+                              id - 1 > 0 ? 'justify-between' : 'justify-end',
+                           ]"
+                        >
                            <Button
                               v-if="id - 1 > 0"
                               label="Sebelumnya"
