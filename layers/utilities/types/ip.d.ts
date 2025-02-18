@@ -1,0 +1,1 @@
+declare type IpAddress = `${number}.${number}.${number}.${number}`
