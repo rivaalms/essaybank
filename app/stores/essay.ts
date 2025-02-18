@@ -34,6 +34,7 @@ export const useEssayStore = defineStore("essaybank-essay-store", {
 
       addAnswer(questionId: number, answer: string) {
          this.answers.push({ question_id: questionId, answer })
+         this.answers = this.answers.toSorted((a, b) => a.question_id - b.question_id)
       },
 
       updateAnswer(questionId: number, answer: string) {
