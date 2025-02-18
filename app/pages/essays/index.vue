@@ -7,8 +7,9 @@ const recentAnsweredEssay = computed(() => essayStore.getAnswers.find((answer, i
 </script>
 
 <template>
-   <div class="relative h-[calc(100vh-49px)] p-2 xl:p-0 flex items-center justify-center bg-[url('/img/mesh-gradient.png')] bg-cover bg-no-repeat">
-      <Card class="max-w-screen-md">
+   <div class="relative h-[calc(100vh-49px)] p-2 xl:p-0 flex items-center justify-center">
+      <div class="absolute top-0 inset-x-0 w-full h-1/2 bg-[url('/img/mesh-gradient.png')] bg-cover bg-no-repeat"></div>
+      <Card class="max-w-screen-md z-20">
          <template #title>
             <span class="text-xl">Sebelum Mulai, Baca Ini Dulu!</span>
          </template>
