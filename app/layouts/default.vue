@@ -1,11 +1,6 @@
 <script setup lang="ts">
 const dayjs = useDayjs()
 
-const essayStore = useEssayStore()
-onMounted(async () => {
-   essayStore.setIp()
-})
-
 const { y } = useScroll(window)
 </script>
 

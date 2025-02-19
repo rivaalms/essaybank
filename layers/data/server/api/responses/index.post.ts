@@ -13,6 +13,7 @@ export default defineEventHandler(async (event) => {
       })
       return response
    } catch (e) {
+      console.log("🚀 ~ defineEventHandler ~ e:", e)
       throwServerError(e)
    }
 })

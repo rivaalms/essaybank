@@ -52,15 +52,16 @@ function scrollProgressTo(value: number) {
 }
 
 async function navigateToQuestion(questionId: number) {
-   saveAnswerToState()
+   saveAnswer()
    await navigateTo(`/essays/${questionId}`)
 }
 
-function saveAnswerToState() {
+function saveAnswer() {
    if (answer.value.length > 0) {
-      essayStore.updateAnswer(id.value, answer.value)
-   } else {
-      essayStore.removeAnswer(id.value)
+      const existingAnswer = essayStore.getAnswer(id.value)
+      if (existingAnswer?.answer.trim() != answer.value.trim()) {
+         essayStore.updateAnswer(id.value, answer.value)
+      }
    }
 }
 
@@ -69,26 +70,37 @@ async function onPrevQuestion() {
 }
 
 async function onNextQuestion() {
-   saveAnswerToState()
+   saveAnswer()
    await navigateTo(`/essays/${id.value + 1}`)
 }
 
 async function onFinish() {
-   saveAnswerToState()
+   saveAnswer()
 }
 
-onMounted(() => {
-   const existingAnswer = essayStore.getAnswer(id.value)
-   if (existingAnswer) {
-      answer.value = existingAnswer.answer
+onMounted(async () => {
+   if (essayStore.getAnswers.length < 1) {
+      await essayStore.fetchAnswers()
    }
+
    setTimeout(() => {
       document.getElementById("answer-input")?.focus()
    }, 50)
 })
 
+watch(
+   () => essayStore.getAnswers.length,
+   () => {
+      const existingAnswer = essayStore.getAnswer(id.value)
+      if (existingAnswer) {
+         answer.value = existingAnswer.answer
+      }
+   },
+   { immediate: true }
+)
+
 addEventListener("beforeunload", () => {
-   saveAnswerToState()
+   saveAnswer()
 })
 </script>
 

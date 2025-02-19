@@ -1,25 +1,24 @@
 type State = {
    ip: string | null
-   answers: {
-      question_id: number,
-      answer: string
-   }[]
+   answers: Model.Response[]
 }
 
 export const useEssayStore = defineStore("essaybank-essay-store", {
-   persist: {
-      storage: piniaPluginPersistedstate.localStorage(),
-   },
-
    state: (): State => ({
       ip: null,
-      answers: []
+      answers: [],
    }),
 
    getters: {
-      getIp: (state) => (!!state.ip && atob(state.ip)) || null,
+      getIp: (state) => (decode?: boolean) => {
+         if (state.ip && decode) {
+            return atob(state.ip)
+         }
+         return state.ip
+      },
       getAnswers: (state) => state.answers,
-      getAnswer: (state) => (questionId: number) => state.answers.find(a => a.question_id == questionId),
+      getAnswer: (state) => (questionId: number) =>
+         state.answers.find((a) => a.question_id == questionId),
    },
 
    actions: {
@@ -28,26 +27,46 @@ export const useEssayStore = defineStore("essaybank-essay-store", {
       },
 
       async setIp() {
-         const ipfy = await $fetch<{ ip: IpAddress }>("https://api.ipify.org?format=json")
+         const ipfy = await $fetch<{ ip: IpAddress }>(
+            "https://api.ipify.org?format=json"
+         )
          this.updateIp(ipfy.ip)
       },
 
-      addAnswer(questionId: number, answer: string) {
-         this.answers.push({ question_id: questionId, answer })
-         this.answers = this.answers.toSorted((a, b) => a.question_id - b.question_id)
+      async fetchAnswers() {
+         await $responseApi()
+            .list()
+            .then((res) => {
+               this.answers = res.data.data
+            })
       },
 
-      updateAnswer(questionId: number, answer: string) {
-         const existingAnswer = this.answers.find(a => a.question_id == questionId)
+      async addAnswer(questionId: number, answer: string) {
+         await useValidation($responseSchema().create, {
+            question_id: questionId,
+            answer,
+         }).validate(async (values) => {
+            await $responseApi().create(values)
+               .then(async () => await this.fetchAnswers())
+         })
+      },
+
+      async updateAnswer(questionId: number, answer: string) {
+         const existingAnswer = this.answers.find(
+            (a) => a.question_id == questionId
+         )
          if (!existingAnswer) {
             this.addAnswer(questionId, answer)
             return
          }
-         existingAnswer.answer = answer
-      },
 
-      removeAnswer(questionId: number) {
-         this.answers = this.answers.filter(a => a.question_id != questionId)
-      }
-   }
+         await useValidation($responseSchema().update, {
+            question_id: questionId,
+            answer,
+         }).validate(async (values) => {
+            await $responseApi().update(existingAnswer.id, values)
+               .then(async () => this.fetchAnswers())
+         })
+      },
+   },
 })

@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
             'Requester-Ip': requesterIp
          } as HeadersInit
       })
+      return response
    } catch (e) {
       throwServerError(e)
    }

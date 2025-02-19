@@ -7,7 +7,7 @@ export function $responseApi() {
          method: "get",
          query,
          headers: {
-            'Requester-Ip': essayStore.getIp
+            'Requester-Ip': essayStore.getIp()
          } as HeadersInit
       })
    }
@@ -16,7 +16,7 @@ export function $responseApi() {
       return await $api<API.Response<Model.Response>>(`/api/responses/${id}`, {
          method: "get",
          headers: {
-            'Requester-Ip': essayStore.getIp
+            'Requester-Ip': essayStore.getIp()
          } as HeadersInit
       })
    }
@@ -26,7 +26,7 @@ export function $responseApi() {
          method: "post",
          body,
          headers: {
-            'Requester-Ip': essayStore.getIp
+            'Requester-Ip': essayStore.getIp()
          } as HeadersInit
       })
    }
@@ -36,7 +36,7 @@ export function $responseApi() {
          method: "put",
          body,
          headers: {
-            'Requester-Ip': essayStore.getIp
+            'Requester-Ip': essayStore.getIp()
          } as HeadersInit
       })
    }
