@@ -136,18 +136,17 @@ addEventListener("beforeunload", () => {
                         <template v-for="n in count">
                            <div
                               :id="`question-indicator-${n}`"
-                              class="px-4 py-2 rounded-lg select-none cursor-pointer"
+                              class="py-3 rounded-lg select-none cursor-pointer min-w-10 truncate flex justify-center border relative"
                               :class="{
-                                 'bg-primary-100 text-primary-600 border border-primary-600':
+                                 'bg-primary-100 text-primary-600 border-primary-600':
                                     n === id,
-                                 'bg-surface-100 text-surface-500':
-                                    n !== id && !answeredQuestionId.includes(n),
-                                 'bg-emerald-100 text-emerald-500 border border-emerald-500':
-                                    n !== id && answeredQuestionId.includes(n),
+                                 'border-surface-300 text-surface-500':
+                                    n !== id,
                               }"
                               @click.stop="navigateToQuestion(n)"
                            >
                               {{ n }}
+                              <div v-if="answeredQuestionId.includes(n)" class="absolute bottom-0 inset-x-0 h-1.5 bg-emerald-400 rounded-b-[0.425rem]"></div>
                            </div>
                         </template>
                      </div>
