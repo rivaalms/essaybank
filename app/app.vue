@@ -6,6 +6,7 @@
       <NuxtLoadingIndicator />
       <NuxtLayout>
          <NuxtPage />
+         <AppDialog />
       </NuxtLayout>
    </div>
 </template>
