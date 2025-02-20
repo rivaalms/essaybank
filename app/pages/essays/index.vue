@@ -1,14 +1,23 @@
 <script setup lang="ts">
 definePageMeta({
-   layout: 'default'
+   layout: "default",
 })
 const essayStore = useEssayStore()
-const recentAnsweredEssay = computed(() => essayStore.getAnswers.find((answer, index) => index == essayStore.answers.length - 1))
+const totalQuestions = await useCountQuestion()
+const recentAnsweredEssay = computed(() =>
+   essayStore.getAnswers.find(
+      (answer, index) => index == essayStore.answers.length - 1
+   )
+)
 </script>
 
 <template>
-   <div class="relative h-[calc(100vh-49px)] p-2 xl:p-0 flex items-center justify-center">
-      <div class="absolute top-0 inset-x-0 w-full h-1/2 bg-[url('/img/mesh-gradient.png')] bg-cover bg-no-repeat"></div>
+   <div
+      class="relative h-[calc(100vh-49px)] p-2 xl:p-0 flex items-center justify-center"
+   >
+      <div
+         class="absolute top-0 inset-x-0 w-full h-1/2 bg-[url('/img/mesh-gradient.png')] bg-cover bg-no-repeat"
+      ></div>
       <Card class="max-w-screen-md z-20">
          <template #title>
             <span class="text-xl">Sebelum Mulai, Baca Ini Dulu!</span>
@@ -22,10 +31,9 @@ const recentAnsweredEssay = computed(() => essayStore.getAnswers.find((answer, i
                <ul class="list-disc ms-4">
                   <li class="text-pretty">
                      <span class="font-medium text-primary-500">
-                        Ada 50 pertanyaan esai
+                        Ada {{ totalQuestions }} pertanyaan esai
                      </span>
-                     yang bisa kamu isi. Kamu akan diminta untuk menjawab
-                     minimal 10 pertanyaan. Kamu nggak harus menjawab semuanya,
+                     yang bisa kamu isi. Kamu nggak harus menjawab semuanya,
                      tapi semakin banyak yang kamu isi, semakin bermanfaat untuk
                      penelitian ini!
                   </li>
@@ -40,9 +48,9 @@ const recentAnsweredEssay = computed(() => essayStore.getAnswers.find((answer, i
                      <span class="font-medium text-primary-500">
                         Progres kamu aman!
                      </span>
-                     Begitu kamu mulai, alamat IP kamu akan disimpan di browser
-                     supaya progres tetap tersimpan. Jadi, kalau tab tertutup
-                     atau kamu mau lanjut nanti, jawabannya nggak bakal hilang.
+                     Jawaban yang sudah kamu isi akan langsung tersimpan secara
+                     otomatis. Jadi, jika tab tertutup atau kamu pindah halaman,
+                     kamu bisa lanjut kapan saja tanpa kehilangan progres!
                   </li>
                   <li class="text-pretty">
                      <span class="font-medium text-primary-500">
@@ -56,14 +64,16 @@ const recentAnsweredEssay = computed(() => essayStore.getAnswers.find((answer, i
             </div>
          </template>
          <template #footer>
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4 mt-8">
+            <div
+               class="flex flex-col md:flex-row items-center justify-between gap-4 mt-8"
+            >
                <Button
                   label="Mulai Sekarang"
                   icon="pi pi-arrow-right"
                   icon-pos="right"
                   size="large"
                   as="router-link"
-                  :to="`/essays/${recentAnsweredEssay?.question_id ?? 1}`"
+                  :to="`/essays/1`"
                   class="order-first md:order-last"
                />
                <Button
