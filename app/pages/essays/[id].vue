@@ -52,15 +52,15 @@ function scrollProgressTo(value: number) {
 }
 
 async function navigateToQuestion(questionId: number) {
-   saveAnswer()
+   await saveAnswer()
    await navigateTo(`/essays/${questionId}`)
 }
 
-function saveAnswer() {
+async function saveAnswer() {
    if (answer.value.length > 0) {
       const existingAnswer = essayStore.getAnswer(id.value)
       if (existingAnswer?.answer.trim() != answer.value.trim()) {
-         essayStore.updateAnswer(id.value, answer.value)
+         await essayStore.updateAnswer(id.value, answer.value)
       }
    }
 }
@@ -70,12 +70,19 @@ async function onPrevQuestion() {
 }
 
 async function onNextQuestion() {
-   saveAnswer()
+   await saveAnswer()
    await navigateTo(`/essays/${id.value + 1}`)
 }
 
 async function onFinish() {
-   saveAnswer()
+   await saveAnswer().then(async () => {
+      useAppStore().showConfirmDialog({
+         title: "Konfirmasi Selesai",
+         message: "Apakah kamu yakin ingin menyelesaikan esai ini?",
+         data: {},
+         onConfirm: () => navigateTo("/essays/finish"),
+      })
+   })
 }
 
 onMounted(async () => {
@@ -99,8 +106,8 @@ watch(
    { immediate: true }
 )
 
-addEventListener("beforeunload", () => {
-   saveAnswer()
+addEventListener("beforeunload", async () => {
+   await saveAnswer()
 })
 </script>
 
@@ -110,14 +117,22 @@ addEventListener("beforeunload", () => {
    >
       <div
          class="absolute top-0 inset-x-0 h-1/2 w-full bg-[url('/img/mesh-gradient.png')] bg-cover bg-no-repeat"
-      ></div>
+      />
       <div class="container mx-auto max-w-screen-md z-20">
          <div class="flex flex-col gap-4">
             <Card>
                <template #title>
-                  <span class="text-base font-normal text-surface-500">
-                     Progress Kamu
-                  </span>
+                  <div class="flex items-center justify-between">
+                     <span class="text-base font-normal text-surface-500">
+                        Progress Kamu
+                     </span>
+                     <!-- <Button
+                        label="Selesai Mengisi"
+                        variant="text"
+                        icon="pi pi-check"
+                        @click="onFinish"
+                     /> -->
+                  </div>
                </template>
                <template #content>
                   <div class="flex items-center justify-between gap-4">
@@ -146,7 +161,10 @@ addEventListener("beforeunload", () => {
                               @click.stop="navigateToQuestion(n)"
                            >
                               {{ n }}
-                              <div v-if="answeredQuestionId.includes(n)" class="absolute bottom-0 inset-x-0 h-1.5 bg-emerald-400 rounded-b-[0.425rem]"></div>
+                              <div
+                                 v-if="answeredQuestionId.includes(n)"
+                                 class="absolute bottom-0 inset-x-0 h-1.5 bg-emerald-400 rounded-b-[0.425rem]"
+                              ></div>
                            </div>
                         </template>
                      </div>
