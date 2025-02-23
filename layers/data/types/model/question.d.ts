@@ -9,6 +9,6 @@ declare namespace Model {
 
    namespace Question {
       type Query = API.Paginable & Nullable<API.Searchable>
-      type Request = Pick<Model.Question, 'question' | 'reference_answer'>
+      type Request = Required<Pick<Model.Question, 'question' | 'reference_answer'>>
    }
 }

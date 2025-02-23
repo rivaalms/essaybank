@@ -9,4 +9,11 @@ export default defineNuxtConfig({
       "pinia-plugin-persistedstate/nuxt",
       "@vueuse/nuxt",
    ],
+
+   dayjs: {
+      locales: ['id', 'en'],
+      defaultLocale: 'id',
+      plugins: ['relativeTime', 'timezone', 'utc'],
+      defaultTimezone: 'Asia/Jakarta'
+   }
 })
