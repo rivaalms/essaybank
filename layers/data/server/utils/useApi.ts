@@ -2,7 +2,7 @@ import { type H3Event } from 'h3'
 
 export default function (event: H3Event) {
    const config = useRuntimeConfig()
-   const token = getCookie(event, 'pawline_auth_token')
+   const token = getCookie(event, 'essaybank-auth-token')
 
    const handler = $fetch.create({
       baseURL: config.public.apiUrl,
