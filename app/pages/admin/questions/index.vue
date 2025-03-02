@@ -7,6 +7,7 @@ const dayjs = useDayjs()
 const appStore = useAppStore()
 
 const columns = [
+   { field: 'id', header: 'ID' },
    { field: "question", header: "Pertanyaan" },
    { field: "updated_at", header: "Tanggal Perbarui" },
    { field: "actions", header: "Aksi" },
