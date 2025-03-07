@@ -1,16 +1,28 @@
 <script setup lang="ts"></script>
 
 <template>
-   <div class="py-40 container max-w-screen-lg px-4 xl:px-0 mx-auto" id="profile">
+   <div
+      class="py-40 container max-w-screen-lg px-4 xl:px-0 mx-auto"
+      id="profile"
+   >
       <div class="mb-12 flex flex-col items-center gap-4">
          <div class="h-28 w-28">
-            <img src="/img/profile.jpg" class="object-contain rounded-full" />
+            <img
+               src="/img/profile.jpg"
+               class="object-contain rounded-full"
+            />
          </div>
          <div class="flex flex-col items-center">
-            <p class="text-xl font-medium text-center">Hai! Saya Riva Almero</p>
+            <p class="text-2xl md:text-4xl font-medium text-center">
+               Hai! Saya <span class="text-primary-500 font-semibold">Riva Almero</span>
+            </p>
             <p class="text-center">
                Mahasiswa S1 Teknik Informatika di
-               <a href="https://www.widyatama.ac.id/" target="_blank" class="hover:text-primary hover:underline transition-all">
+               <a
+                  href="https://www.widyatama.ac.id/"
+                  target="_blank"
+                  class="hover:text-primary hover:underline transition-all"
+               >
                   Universitas Widyatama
                </a>
             </p>
@@ -20,7 +32,7 @@
          <div class="flex flex-col md:grid gap-y-4">
             <Panel>
                <template #header>
-                  <p class="text-lg font-medium">
+                  <p class="text-lg md:text-xl font-medium">
                      Apa yang sedang saya lakukan?
                   </p>
                </template>
@@ -31,7 +43,7 @@
             </Panel>
             <Panel>
                <template #header>
-                  <p class="text-lg font-medium">
+                  <p class="text-lg md:text-xl font-medium">
                      Mengapa website EssayBank dibuat?
                   </p>
                </template>
@@ -48,7 +60,7 @@
          <div class="flex flex-col md:grid gap-y-4">
             <Panel>
                <template #header>
-                  <p class="text-lg font-medium">
+                  <p class="text-lg md:text-xl font-medium">
                      Mengapa saya meneliti bidang ini?
                   </p>
                </template>
@@ -62,7 +74,7 @@
             </Panel>
             <Panel>
                <template #header>
-                  <p class="text-lg font-medium">Apa manfaat penelitian ini?</p>
+                  <p class="text-lg md:text-xl font-medium">Apa manfaat penelitian ini?</p>
                </template>
                <ul class="list-disc ms-4">
                   <li>

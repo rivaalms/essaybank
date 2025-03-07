@@ -7,7 +7,7 @@
       >
          <div class="flex flex-col sm:grid sm:grid-cols-12 gap-12 sm:place-items-center">
             <div class="col-span-12 sm:col-span-8">
-               <p class="text-2xl font-medium mb-8">Informasi Kontak</p>
+               <p class="text-2xl md:text-4xl font-medium mb-8">Informasi Kontak</p>
                <p class="mb-4 text-pretty">
                   Jika kamu memiliki kritik, saran, atau pertanyaan seputar
                   penelitian ini, jangan ragu untuk menghubungi saya!
@@ -36,7 +36,7 @@
                </p>
             </div>
             <div class="sm:col-span-4">
-               <img src="/img/mailbox-primary.png" class="object-cover" />
+               <img src="/img/mailbox-noir.svg" class="object-cover h-full w-full" />
             </div>
          </div>
       </div>

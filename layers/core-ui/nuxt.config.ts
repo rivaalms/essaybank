@@ -1,5 +1,5 @@
 import { createResolver } from "@nuxt/kit"
-import { resolveTheme } from "./theme"
+import { resolveTheme, Noir } from "./theme"
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -19,11 +19,13 @@ export default defineNuxtConfig({
    primevue: {
       options: {
          theme: {
-            preset: resolveTheme(import.meta.env.APP_PRIMARY_COLOR),
+            preset: Noir,
             options: {
-               cssLayer: false,
-               order: "tailwind-base, primevue, tailwind-utilities",
-               darkModeSelector: 'light'
+               cssLayer: {
+                  // name: 'primevue',
+                  // order: "tailwind-base, primevue, tailwind-utilities",
+               },
+               darkModeSelector: '.essaybank-dark'
             }
          }
       }

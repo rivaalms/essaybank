@@ -21,9 +21,9 @@ function scrollToTop() {
          </div>
       </Transition>
    </div>
-   <footer class="py-4 px-2 xl:px-0 bg-surface-50">
+   <footer class="py-4 px-2 xl:px-0">
       <div class="h-full container mx-auto flex items-center">
-         <span class="text-surface-500 text-sm md:text-base">
+         <span class="text-primary-500 text-sm md:text-base">
             {{ dayjs().year() }} &copy; Riva Almero
          </span>
       </div>
